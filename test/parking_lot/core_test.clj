@@ -19,7 +19,7 @@
   (is (= 1100 (total-price {:start-date-time  (local-date-time 2022 4 18  0  0  0)      ; 24Hで最大1100円。
                             :finish-date-time (local-date-time 2022 4 19  0  0  0)})))
   (is (= 1200 (total-price {:start-date-time  (local-date-time 2022 4 18  0  0  0)
-                            :finish-date-time (local-date-time 2022 4 19  1  0  0)})))
+                            :finish-date-time (local-date-time 2022 4 19  0  0  1)})))
   (is (= 2200 (total-price {:start-date-time  (local-date-time 2022 4 18  0  0  0)
                             :finish-date-time (local-date-time 2022 4 19  8 20  0)})))
   (is (= 2300 (total-price {:start-date-time  (local-date-time 2022 4 18  0  0  0)      ; 24H最大1100円は1回だけ。

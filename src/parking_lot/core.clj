@@ -47,18 +47,21 @@
 
 (defn total-price
   [state]
-  ;; TODO: ダイクストラ法に変更する。
+  ;; TODO: ダイクストラ法に変更する。今はとりあえず深さ優先の全探索。
   (->> (loop [stack [(assoc state :total-price 0)] visited-states #{} total-prices []]
          (if ((complement empty?) stack)
            (let [state (peek stack)
                  stack (pop  stack)]
-             (if (contains? visited-states state)
-               (recur stack visited-states total-prices)
-               (let [visited-states (conj visited-states state)]
-                 (if (goal? state)
-                   (recur stack visited-states (conj total-prices (:total-price state)))
-                   (recur (vec (concat stack (map (partial next-state state) (actions state))))
-                          visited-states
-                          total-prices)))))
+             (cond
+               (contains? visited-states state) (recur stack 
+                                                       visited-states 
+                                                       total-prices)
+               (goal? state)                    (recur stack 
+                                                       (conj visited-states state) 
+                                                       (conj total-prices (:total-price state)))
+               :else                            (recur (vec (concat stack
+                                                                    (map (partial next-state state) (actions state))))
+                                                       (conj visited-states state) 
+                                                       total-prices)))
            total-prices))
        (apply min)))
